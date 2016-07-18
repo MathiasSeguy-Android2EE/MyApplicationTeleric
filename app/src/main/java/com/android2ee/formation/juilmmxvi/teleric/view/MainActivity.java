@@ -1,4 +1,4 @@
-package com.android2ee.formation.juilmmxvi.teleric;
+package com.android2ee.formation.juilmmxvi.teleric.view;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -7,6 +7,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+
+import com.android2ee.formation.juilmmxvi.teleric.R;
 
 import java.util.ArrayList;
 
