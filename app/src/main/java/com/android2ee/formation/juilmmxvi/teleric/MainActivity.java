@@ -1,14 +1,17 @@
 package com.android2ee.formation.juilmmxvi.teleric;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.ListView;
 
-public class MainActivity extends AppCompatActivity {
+import java.util.ArrayList;
 
+public class MainActivity extends MotherActivity {
+    private static final String TAG = "MainActivity";
     /***********************************************************
      *  Constant
      **********************************************************/
@@ -28,20 +31,36 @@ public class MainActivity extends AppCompatActivity {
     /**
      * The Result area
      */
-    private TextView txvResult;
+    private ListView lsvResult;
+    /**
+     * The arrayAdapter == the model of the list view
+     */
+    private ArrayAdapter<String> arrayAdapter;
+    /**
+     * The list of messages to display
+     */
+    private ArrayList<String> messages;
 
     /***********************************************************
      * Managing LifeCycle
      **********************************************************/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d(TAG, "onCreate() called with: " + "savedInstanceState = [" + savedInstanceState + "]");
         super.onCreate(savedInstanceState);
         //instantiate the view
         setContentView(R.layout.activity_main);
         //instantiate graphical components
         edtMessage = (EditText) findViewById(R.id.edtMessage);
         btnAdd = (Button) findViewById(R.id.btnAdd);
-        txvResult = (TextView) findViewById(R.id.txvResult);
+        lsvResult = (ListView) findViewById(R.id.lsvResult);
+        if(savedInstanceState!=null){
+            messages=savedInstanceState.getStringArrayList(RES);
+        }else{
+            messages=new ArrayList<>();
+        }
+        arrayAdapter=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,messages);
+        lsvResult.setAdapter(arrayAdapter);
         //implement the listeners
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,18 +70,25 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+
     @Override
     protected void onSaveInstanceState(Bundle outState) {
+        Log.d(TAG, "onSaveInstanceState() called with: " + "outState = [" + outState + "]");
         super.onSaveInstanceState(outState);
         outState.putString(EDT,edtMessage.getText().toString());
-        outState.putString(RES,txvResult.getText().toString());
+        outState.putStringArrayList(RES,messages);
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        Log.d(TAG, "onRestoreInstanceState() called with: " + "savedInstanceState = [" + savedInstanceState + "]");
         super.onRestoreInstanceState(savedInstanceState);
         edtMessage.setText(savedInstanceState.getString(EDT));
-        txvResult.setText(savedInstanceState.getString(RES));
+//        ArrayList<String> temp=savedInstanceState.getStringArrayList(RES);
+//        for (int i = 0; i < temp.size(); i++) {
+//            messages.add(temp.get(i));
+//        }
+//        arrayAdapter.notifyDataSetChanged();
     }
     /***********************************************************
  *  Business Methods
@@ -71,8 +97,12 @@ public class MainActivity extends AppCompatActivity {
      * Add the message from the editText in the Result area
      */
     private void addMessageInResult() {
-        String message = txvResult.getText() + "\r\n" + edtMessage.getText().toString();
-        txvResult.setText(message);
+        String message = edtMessage.getText().toString();
+        //first way
+//        messages.add(message);
+//        arrayAdapter.notifyDataSetChanged();
+        //second
+        arrayAdapter.add(message);
         edtMessage.setText("");
     }
 }

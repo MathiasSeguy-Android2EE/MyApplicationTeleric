@@ -39,11 +39,11 @@
 
         android:background="#FFF0FF00"
     />
-    <TextView
-        android:id="@+id/txvResult"
+    <ListView
+        android:id="@+id/lsvResult"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
 
-        android:background="#FF00FF"
+        android:background="#ffee00"
     />
 </LinearLayout>
