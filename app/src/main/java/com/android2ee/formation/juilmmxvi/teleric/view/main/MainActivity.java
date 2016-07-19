@@ -3,6 +3,7 @@ package com.android2ee.formation.juilmmxvi.teleric.view.main;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -75,6 +76,12 @@ public class MainActivity extends MotherActivity {
                 addMessageInResult();
             }
         });
+        lsvResult.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                itemClicked(position);
+            }
+        });
     }
 
 
@@ -100,16 +107,27 @@ public class MainActivity extends MotherActivity {
     /***********************************************************
      *  Business Methods
      **********************************************************/
+    String messageTemp;
+    Human humanTemp;
     /**
      * Add the message from the editText in the Result area
      */
     private void addMessageInResult() {
-        String message = edtMessage.getText().toString();
+        messageTemp = edtMessage.getText().toString();
         //first way
 //        messages.add(message);
 //        arrayAdapter.notifyDataSetChanged();
         //second
-        humanAdapter.add(new Human(message, humen.size()));
+        humanAdapter.add(new Human(messageTemp, humen.size()));
         edtMessage.setText("");
+    }
+
+    /**
+     * Copy the item selected into the editText
+     * @param position
+     */
+    private void itemClicked(int position){
+        humanTemp=humanAdapter.getItem(position);
+        edtMessage.setText(humanTemp.getMessage());
     }
 }

@@ -73,6 +73,7 @@ public class HumanAdapter extends ArrayAdapter<Human> {
      **********************************************************/
     Human humanTemp;
     View rowView;
+    ViewHolder vh;
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -84,12 +85,15 @@ public class HumanAdapter extends ArrayAdapter<Human> {
             }else{
                 rowView=inflater.inflate(R.layout.human_odd,parent,false);
             }
+            vh=new ViewHolder(rowView);
+            rowView.setTag(vh);
         }
         //update the view
         humanTemp=getItem(position);
-        ((TextView)rowView.findViewById(R.id.txvName)).setText(humanTemp.getName());
-        ((TextView)rowView.findViewById(R.id.txvMessage)).setText(humanTemp.getMessage());
-        ((ImageView)rowView.findViewById(R.id.imvPicture)).setImageResource(humanTemp.getPicture());
+        vh= (ViewHolder) rowView.getTag();
+        vh.getTxvName().setText(humanTemp.getName());
+        vh.getTxvMessage().setText(humanTemp.getMessage());
+        vh.getImvPicture().setImageResource(humanTemp.getPicture());
         //return it
         return rowView;
     }
@@ -109,5 +113,30 @@ public class HumanAdapter extends ArrayAdapter<Human> {
         humanTemp=getItem(position);
 
         return humanTemp.getName().equals("toto")?0:1;
+    }
+
+    /***********************************************************
+     *  The ViewHolder pattern
+     **********************************************************/
+    public class ViewHolder{
+        private TextView txvName,txvMessage;
+        private ImageView imvPicture;
+        public ViewHolder(View view){
+            txvName= (TextView) view.findViewById(R.id.txvName);
+            txvMessage= (TextView) view.findViewById(R.id.txvMessage);
+            imvPicture= (ImageView) view.findViewById(R.id.imvPicture);
+        }
+
+        public ImageView getImvPicture() {
+            return imvPicture;
+        }
+
+        public TextView getTxvMessage() {
+            return txvMessage;
+        }
+
+        public TextView getTxvName() {
+            return txvName;
+        }
     }
 }
