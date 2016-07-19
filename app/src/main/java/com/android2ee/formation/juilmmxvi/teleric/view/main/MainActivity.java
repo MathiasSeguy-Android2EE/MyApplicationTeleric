@@ -1,14 +1,16 @@
-package com.android2ee.formation.juilmmxvi.teleric.view;
+package com.android2ee.formation.juilmmxvi.teleric.view.main;
 
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
 import com.android2ee.formation.juilmmxvi.teleric.R;
+import com.android2ee.formation.juilmmxvi.teleric.model.Human;
+import com.android2ee.formation.juilmmxvi.teleric.view.generic.MotherActivity;
+import com.android2ee.formation.juilmmxvi.teleric.view.main.adapter.HumanAdapter;
 
 import java.util.ArrayList;
 
@@ -37,11 +39,11 @@ public class MainActivity extends MotherActivity {
     /**
      * The arrayAdapter == the model of the list view
      */
-    private ArrayAdapter<String> arrayAdapter;
+    private HumanAdapter humanAdapter;
     /**
      * The list of messages to display
      */
-    private ArrayList<String> messages;
+    private ArrayList<Human> humen;
 
     /***********************************************************
      * Managing LifeCycle
@@ -57,12 +59,12 @@ public class MainActivity extends MotherActivity {
         btnAdd = (Button) findViewById(R.id.btnAdd);
         lsvResult = (ListView) findViewById(R.id.lsvResult);
         if(savedInstanceState!=null){
-            messages=savedInstanceState.getStringArrayList(RES);
+            humen =savedInstanceState.getParcelableArrayList(RES);
         }else{
-            messages=new ArrayList<>();
+            humen =new ArrayList<>();
         }
-        arrayAdapter=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,messages);
-        lsvResult.setAdapter(arrayAdapter);
+        humanAdapter=new HumanAdapter(this, humen);
+        lsvResult.setAdapter(humanAdapter);
         //implement the listeners
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,7 +80,7 @@ public class MainActivity extends MotherActivity {
         Log.d(TAG, "onSaveInstanceState() called with: " + "outState = [" + outState + "]");
         super.onSaveInstanceState(outState);
         outState.putString(EDT,edtMessage.getText().toString());
-        outState.putStringArrayList(RES,messages);
+        outState.putParcelableArrayList(RES, humen);
     }
 
     @Override
@@ -104,7 +106,7 @@ public class MainActivity extends MotherActivity {
 //        messages.add(message);
 //        arrayAdapter.notifyDataSetChanged();
         //second
-        arrayAdapter.add(message);
+        humanAdapter.add(new Human(message,humen.size()));
         edtMessage.setText("");
     }
 }

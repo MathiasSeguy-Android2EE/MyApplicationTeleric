@@ -29,7 +29,7 @@
  * *****************************************************************************************************************</br>
  */
 
-package com.android2ee.formation.juilmmxvi.teleric.view;
+package com.android2ee.formation.juilmmxvi.teleric.view.generic;
 
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
