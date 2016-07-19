@@ -59,6 +59,8 @@ public class MainActivity extends MotherActivity {
         edtMessage = (EditText) findViewById(R.id.edtMessage);
         btnAdd = (Button) findViewById(R.id.btnAdd);
         lsvResult = (ListView) findViewById(R.id.lsvResult);
+        //to avoid selector to be drawn like a big rectancle
+        lsvResult.setSelector(R.drawable.shape_listview_selector);
         if (savedInstanceState != null) {
             humen = savedInstanceState.getParcelableArrayList(RES);
         } else {

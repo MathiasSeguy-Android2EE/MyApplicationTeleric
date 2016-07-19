@@ -17,12 +17,13 @@
         android:layout_height="wrap_content"
         android:shadowColor="@color/colorPrimary"
         android:shadowDx="2"
-        android:shadowDy="6"
-        android:shadowRadius="4"
+        android:shadowDy="2"
+        android:shadowRadius="2"
         android:text="@string/txv_title"
         android:textSize="18sp"
         android:background="#FF00FF00"
         android:gravity="center"
+        android:layout_marginBottom="5dp"
     />
     <EditText
         android:id="@+id/edtMessage"
@@ -30,20 +31,19 @@
         android:layout_height="wrap_content"
         android:ems="12"
         android:hint="@string/edt_hint"
-        android:inputType="text"/>
+        android:inputType="text"
+        android:layout_marginBottom="5dp"/>
     <Button
         android:id="@+id/btnAdd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/btn_add"
-
-        android:background="#FFF0FF00"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/btn_background"
     />
     <ListView
         android:id="@+id/lsvResult"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
-        android:background="#ffee00"
     />
 </LinearLayout>

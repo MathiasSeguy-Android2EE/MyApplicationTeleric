@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+	<corners
+		android:radius="20dp" />
+	<gradient
+		android:angle="0"
+		android:centerColor="#fff200"
+		android:startColor="#00ffe5"
+		android:endColor="#fb01c9"
+		android:type="linear"
+	/>
+	<!--["linear" | "radial" | "sweep"]-->
+	<!--<solid-->
+		<!--android:color="@color/colorAccent" />-->
+	<stroke
+		android:width="2dp"
+		android:color="@color/colorPrimaryDark" />
+</shape>
