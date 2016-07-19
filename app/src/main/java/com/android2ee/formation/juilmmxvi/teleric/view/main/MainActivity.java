@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class MainActivity extends MotherActivity {
     private static final String TAG = "MainActivity";
     /***********************************************************
-     *  Constant
+     * Constant
      **********************************************************/
     public static final String EDT = "EDT";
     public static final String RES = "RES";
@@ -58,12 +58,15 @@ public class MainActivity extends MotherActivity {
         edtMessage = (EditText) findViewById(R.id.edtMessage);
         btnAdd = (Button) findViewById(R.id.btnAdd);
         lsvResult = (ListView) findViewById(R.id.lsvResult);
-        if(savedInstanceState!=null){
-            humen =savedInstanceState.getParcelableArrayList(RES);
-        }else{
-            humen =new ArrayList<>();
+        if (savedInstanceState != null) {
+            humen = savedInstanceState.getParcelableArrayList(RES);
+        } else {
+            humen = new ArrayList<>();
+            for(int i=0;i<10000;i++){
+                humen.add(new Human("Item "+i,i));
+            }
         }
-        humanAdapter=new HumanAdapter(this, humen);
+        humanAdapter = new HumanAdapter(this, humen);
         lsvResult.setAdapter(humanAdapter);
         //implement the listeners
         btnAdd.setOnClickListener(new View.OnClickListener() {
@@ -79,7 +82,7 @@ public class MainActivity extends MotherActivity {
     protected void onSaveInstanceState(Bundle outState) {
         Log.d(TAG, "onSaveInstanceState() called with: " + "outState = [" + outState + "]");
         super.onSaveInstanceState(outState);
-        outState.putString(EDT,edtMessage.getText().toString());
+        outState.putString(EDT, edtMessage.getText().toString());
         outState.putParcelableArrayList(RES, humen);
     }
 
@@ -95,8 +98,8 @@ public class MainActivity extends MotherActivity {
 //        arrayAdapter.notifyDataSetChanged();
     }
     /***********************************************************
- *  Business Methods
- **********************************************************/
+     *  Business Methods
+     **********************************************************/
     /**
      * Add the message from the editText in the Result area
      */
@@ -106,7 +109,7 @@ public class MainActivity extends MotherActivity {
 //        messages.add(message);
 //        arrayAdapter.notifyDataSetChanged();
         //second
-        humanAdapter.add(new Human(message,humen.size()));
+        humanAdapter.add(new Human(message, humen.size()));
         edtMessage.setText("");
     }
 }

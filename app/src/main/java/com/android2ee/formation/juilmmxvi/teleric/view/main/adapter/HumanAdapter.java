@@ -77,7 +77,14 @@ public class HumanAdapter extends ArrayAdapter<Human> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         //create the view
-        rowView=inflater.inflate(R.layout.human_even,parent,false);
+        rowView=convertView;
+        if(rowView==null){
+            if(getItemViewType(position)==0){
+                rowView=inflater.inflate(R.layout.human_even,parent,false);
+            }else{
+                rowView=inflater.inflate(R.layout.human_odd,parent,false);
+            }
+        }
         //update the view
         humanTemp=getItem(position);
         ((TextView)rowView.findViewById(R.id.txvName)).setText(humanTemp.getName());
@@ -85,5 +92,22 @@ public class HumanAdapter extends ArrayAdapter<Human> {
         ((ImageView)rowView.findViewById(R.id.imvPicture)).setImageResource(humanTemp.getPicture());
         //return it
         return rowView;
+    }
+
+    /***********************************************************
+     *  Managing multiple layouts
+     **********************************************************/
+    @Override
+    public int getViewTypeCount() {
+        //how many pools I have in my convertView's pool
+        return 2;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        //depending on the position return in which pool to pick the view
+        humanTemp=getItem(position);
+
+        return humanTemp.getName().equals("toto")?0:1;
     }
 }
