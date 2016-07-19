@@ -120,7 +120,7 @@ public class MainActivity extends MotherActivity {
 //        messages.add(message);
 //        arrayAdapter.notifyDataSetChanged();
         //second
-        humanAdapter.add(new Human(messageTemp, humen.size()));
+        humanAdapter.insert(new Human(messageTemp, humen.size()),0);
         edtMessage.setText("");
     }
 

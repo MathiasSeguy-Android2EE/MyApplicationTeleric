@@ -68,6 +68,13 @@ public class HumanAdapter extends ArrayAdapter<Human> {
 
     }
 
+    /**
+     * Remove the item at the position position
+     * @param position
+     */
+    private void remove(int position){
+        remove(getItem(position));
+    }
     /***********************************************************
      * Temp variable for getView to avoid creating pointer
      **********************************************************/
@@ -85,7 +92,7 @@ public class HumanAdapter extends ArrayAdapter<Human> {
             }else{
                 rowView=inflater.inflate(R.layout.human_odd,parent,false);
             }
-            vh=new ViewHolder(rowView);
+            vh=new ViewHolder(rowView,this);
             rowView.setTag(vh);
         }
         //update the view
@@ -94,6 +101,7 @@ public class HumanAdapter extends ArrayAdapter<Human> {
         vh.getTxvName().setText(humanTemp.getName());
         vh.getTxvMessage().setText(humanTemp.getMessage());
         vh.getImvPicture().setImageResource(humanTemp.getPicture());
+        vh.setPosition(position);
         //return it
         return rowView;
     }
@@ -111,8 +119,7 @@ public class HumanAdapter extends ArrayAdapter<Human> {
     public int getItemViewType(int position) {
         //depending on the position return in which pool to pick the view
         humanTemp=getItem(position);
-
-        return humanTemp.getName().equals("toto")?0:1;
+        return position%2==0?0:1;
     }
 
     /***********************************************************
@@ -120,11 +127,21 @@ public class HumanAdapter extends ArrayAdapter<Human> {
      **********************************************************/
     public class ViewHolder{
         private TextView txvName,txvMessage;
-        private ImageView imvPicture;
-        public ViewHolder(View view){
+        private ImageView imvPicture,imvDelete;
+        private int position;
+        private HumanAdapter adapter;
+        public ViewHolder(View view, final HumanAdapter adapter){
             txvName= (TextView) view.findViewById(R.id.txvName);
             txvMessage= (TextView) view.findViewById(R.id.txvMessage);
             imvPicture= (ImageView) view.findViewById(R.id.imvPicture);
+            imvDelete= (ImageView) view.findViewById(R.id.imvDelete);
+            this.adapter=adapter;
+            imvDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    adapter.remove(position);
+                }
+            });
         }
 
         public ImageView getImvPicture() {
@@ -137,6 +154,10 @@ public class HumanAdapter extends ArrayAdapter<Human> {
 
         public TextView getTxvName() {
             return txvName;
+        }
+
+        public void setPosition(int position) {
+            this.position = position;
         }
     }
 }
