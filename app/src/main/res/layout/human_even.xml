@@ -14,7 +14,7 @@
 		android:layout_gravity="center"/>
 
 	<include layout="@layout/name_message"/>
-	
+
 	<ImageView
 		android:id="@+id/imvDelete"
 		android:src="@mipmap/ic_delete"

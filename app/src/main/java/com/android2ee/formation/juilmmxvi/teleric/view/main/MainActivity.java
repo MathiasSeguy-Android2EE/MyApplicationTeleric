@@ -46,6 +46,10 @@ public class MainActivity extends MotherActivity implements OnItemClickedRecycle
      * The list of messages to display
      */
     private ArrayList<Human> humen;
+    /**
+     * HoneyComb or not  ?o?
+     */
+    private boolean isHoneyComb;
 
     /***********************************************************
      * Managing LifeCycle
@@ -60,6 +64,7 @@ public class MainActivity extends MotherActivity implements OnItemClickedRecycle
         edtMessage = (EditText) findViewById(R.id.edtMessage);
         btnAdd = (Button) findViewById(R.id.btnAdd);
         rcvResult = (RecyclerView) findViewById(R.id.rcvResult);
+        isHoneyComb=getResources().getBoolean(R.bool.isHC);
         //to avoid selector to be drawn like a big rectancle
         if (savedInstanceState != null) {
             humen = savedInstanceState.getParcelableArrayList(RES);
