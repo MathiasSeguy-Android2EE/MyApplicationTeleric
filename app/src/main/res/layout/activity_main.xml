@@ -41,8 +41,8 @@
         android:layout_marginBottom="5dp"
         android:background="@drawable/btn_background"
     />
-    <ListView
-        android:id="@+id/lsvResult"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rcvResult"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
     />

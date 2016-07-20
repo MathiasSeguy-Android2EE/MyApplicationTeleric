@@ -1,21 +1,22 @@
 package com.android2ee.formation.juilmmxvi.teleric.view.main;
 
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 
 import com.android2ee.formation.juilmmxvi.teleric.R;
 import com.android2ee.formation.juilmmxvi.teleric.model.Human;
 import com.android2ee.formation.juilmmxvi.teleric.view.generic.MotherActivity;
-import com.android2ee.formation.juilmmxvi.teleric.view.main.adapter.HumanAdapter;
+import com.android2ee.formation.juilmmxvi.teleric.view.main.adapter.HumanRecyclerAdapter;
+import com.android2ee.formation.juilmmxvi.teleric.view.main.adapter.OnItemClickedRecyclerView;
 
 import java.util.ArrayList;
 
-public class MainActivity extends MotherActivity {
+public class MainActivity extends MotherActivity implements OnItemClickedRecyclerView {
     private static final String TAG = "MainActivity";
     /***********************************************************
      * Constant
@@ -36,11 +37,11 @@ public class MainActivity extends MotherActivity {
     /**
      * The Result area
      */
-    private ListView lsvResult;
+    private RecyclerView rcvResult;
     /**
      * The arrayAdapter == the model of the list view
      */
-    private HumanAdapter humanAdapter;
+    private HumanRecyclerAdapter humanRecyclerAdapter;
     /**
      * The list of messages to display
      */
@@ -58,19 +59,29 @@ public class MainActivity extends MotherActivity {
         //instantiate graphical components
         edtMessage = (EditText) findViewById(R.id.edtMessage);
         btnAdd = (Button) findViewById(R.id.btnAdd);
-        lsvResult = (ListView) findViewById(R.id.lsvResult);
+        rcvResult = (RecyclerView) findViewById(R.id.rcvResult);
         //to avoid selector to be drawn like a big rectancle
-        lsvResult.setSelector(R.drawable.shape_listview_selector);
         if (savedInstanceState != null) {
             humen = savedInstanceState.getParcelableArrayList(RES);
         } else {
             humen = new ArrayList<>();
-            for(int i=0;i<10000;i++){
+            for(int i=0;i<2;i++){
                 humen.add(new Human("Item "+i,i));
             }
         }
-        humanAdapter = new HumanAdapter(this, humen);
-        lsvResult.setAdapter(humanAdapter);
+        humanRecyclerAdapter = new HumanRecyclerAdapter(humen, this) {
+            /**
+             * The item is clicked please do something
+             *
+             * @param position
+             */
+            @Override
+            public void itemClicked(int position) {
+                MainActivity.this.itemClicked(position);
+            }
+        };
+        rcvResult.setLayoutManager(new LinearLayoutManager(this));
+        rcvResult.setAdapter(humanRecyclerAdapter);
         //implement the listeners
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,12 +89,12 @@ public class MainActivity extends MotherActivity {
                 addMessageInResult();
             }
         });
-        lsvResult.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                itemClicked(position);
-            }
-        });
+//        lsvResult.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                itemClicked(position);
+//            }
+//        });
     }
 
 
@@ -120,7 +131,7 @@ public class MainActivity extends MotherActivity {
 //        messages.add(message);
 //        arrayAdapter.notifyDataSetChanged();
         //second
-        humanAdapter.insert(new Human(messageTemp, humen.size()),0);
+        humanRecyclerAdapter.add(0,new Human(messageTemp, humen.size()));
         edtMessage.setText("");
     }
 
@@ -128,8 +139,8 @@ public class MainActivity extends MotherActivity {
      * Copy the item selected into the editText
      * @param position
      */
-    private void itemClicked(int position){
-        humanTemp=humanAdapter.getItem(position);
+    public void itemClicked(int position){
+        humanTemp= humanRecyclerAdapter.getItem(position);
         edtMessage.setText(humanTemp.getMessage());
     }
 }
