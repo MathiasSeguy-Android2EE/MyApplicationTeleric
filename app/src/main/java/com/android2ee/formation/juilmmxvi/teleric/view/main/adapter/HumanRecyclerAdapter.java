@@ -143,6 +143,15 @@ implements OnItemClickedRecyclerView{
         humen.add(0,hum);
         notifyItemInserted(0);
     }
+
+    /**
+     * Delete all the item
+     */
+    public void deleteAll(){
+        int size=humen.size();
+        humen.clear();
+        notifyItemRangeRemoved(0,size);
+    }
     @Override
     public int getItemViewType(int position) {
         //depending on the position return in which pool to pick the view

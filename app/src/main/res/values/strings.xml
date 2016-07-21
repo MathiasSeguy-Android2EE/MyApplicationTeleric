@@ -3,4 +3,10 @@
     <string name="txv_title">Teleric TP</string>
     <string name="edt_hint">Mets ton texte ici</string>
     <string name="btn_add">Ajouter</string>
+    <string name="alertdialog_message">Voulez vous supprimer %1$s ?</string>
+    <string name="alertdialog_ok">oui</string>
+    <string name="alertdialog_nok">non</string>
+    <string name="menuitem_delete">DeleteThem All</string>
+    <string name="menuitem_add">Add All</string>
+    <string name="toast_abordcopy">Go fuck away so</string>
 </resources>

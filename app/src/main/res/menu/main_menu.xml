@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+	  xmlns:toto="http://schemas.android.com/apk/res-auto">
+	<item
+		android:icon="@mipmap/ic_delete"
+		android:title="@string/menuitem_delete"
+		android:id="@+id/menu_deleteall"
+		toto:showAsAction="always"/>
+	<item
+		android:icon="@mipmap/ic_addbunch"
+		android:title="@string/menuitem_add"
+		android:id="@+id/menu_addall"
+		toto:showAsAction="always"/>
+</menu>
