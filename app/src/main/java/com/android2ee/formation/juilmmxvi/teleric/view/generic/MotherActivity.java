@@ -31,8 +31,13 @@
 
 package com.android2ee.formation.juilmmxvi.teleric.view.generic;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.Toast;
 
 /**
  * Created by Mathias Seguy - Android2EE on 18/07/2016.
@@ -40,10 +45,77 @@ import android.util.Log;
 public class MotherActivity extends AppCompatActivity {
     private static final String TAG = "MotherActivity";
 
+    /***********************************************************
+     * Manging SmsReceive runtime permission asking
+     **********************************************************/
+    private final int MY_PERMISSIONS_REQUEST_READ_CONTACTS=48;
     @Override
     protected void onStart() {
         Log.d(TAG, "onStart() called with: " + "");
+
+        //My Application need to have the receive sms permission
+        // Do I have the permission already granted
+
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.RECEIVE_SMS)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Should we show an explanation?
+            //Yes we have
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.RECEIVE_SMS)) {
+
+                // Show an expanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+
+            } else {
+
+                // No explanation needed, we can request the permission.
+
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.RECEIVE_SMS},
+                        MY_PERMISSIONS_REQUEST_READ_CONTACTS);
+
+                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                // app-defined int constant. The callback method gets the
+                // result of the request.
+            }
+        }
         super.onStart();
+    }
+
+    @Override
+    public boolean shouldShowRequestPermissionRationale(String permission) {
+        //depending on the permission do I need to display an Dialog
+        return false;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_READ_CONTACTS: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
+                    //For now, I can receive Sms nothing to do
+                    Toast.makeText(this,"Thanks dude, Sms will be displayed as notification",Toast.LENGTH_LONG).show();
+
+                } else {
+                    Toast.makeText(this,"We won't receive Sms so, bad ass!",Toast.LENGTH_LONG).show();
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request
+        }
     }
 
     @Override
